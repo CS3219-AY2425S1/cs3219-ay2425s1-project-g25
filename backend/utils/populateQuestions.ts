@@ -8,7 +8,7 @@ export async function populateQuestions() {
     const PORT = process.env.PORT;
     const url = `http://localhost:${PORT}/api/questions/`;
 
-    const jsonPath = path.resolve(__dirname, "../data/questions.json");
+    const jsonPath = path.resolve(__dirname, "../question-service/data/questions.json");
     const fileData = fs.readFileSync(jsonPath, "utf8");
     const questions = JSON.parse(fileData);
 

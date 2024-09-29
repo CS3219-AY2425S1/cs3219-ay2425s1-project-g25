@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express, { Express } from 'express';
 import dotenv from 'dotenv';
-import questionsRoutes from './routes/questionsRoutes';
-import categoriesRoutes from './routes/categoriesRoutes';
+import questionsRoutes from './question-service/routes/questionsRoutes';
+import categoriesRoutes from './question-service/routes/categoriesRoutes';
 import { connectToDatabase } from './utils/database';
 import { errorHandler } from './middlewares/errorHandler';
 import { populateQuestions } from './utils/populateQuestions';
