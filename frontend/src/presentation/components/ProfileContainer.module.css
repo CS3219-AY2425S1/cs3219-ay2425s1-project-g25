@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(1.5rem + 1.5vw);
+    padding: 0 2em;
+}
+
+.profilePicture {
+    height: 10em;
+    width: 10em;
+    object-fit: cover;
+    border-radius: 500px;
+}
+
+.nameRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 1em;
+    margin-bottom: 0;
+}
+
+.name {
+    font-size: 3em;
+    font-weight: 500;
+    margin: 0;
+}
+
+.editIcon {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.linksContainer {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2em;
+}

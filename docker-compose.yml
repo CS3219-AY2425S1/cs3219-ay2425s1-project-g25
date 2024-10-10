@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+    # User Service
+    user-service:
+        build: ./backend/user-service
+        container_name: user-service-container
+        working_dir: /usr/src/app
+        volumes:
+            - ./backend/user-service/:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - "3001:3001"
+        networks:
+            - peerprep-network
+
+    # Question Service
+    question-service:
+        build: 
+            context: ./backend/question-service
+            target: dev
+        container_name: question-service
+        ports:
+            - "3002:3002"
+        volumes:
+            - ./backend/question-service:/app
+            - /app/node_modules
+        env_file:
+            - ./backend/question-service/.env
+        environment:
+            DB_HOST: peerprep-mongodb # Override localhost
+        depends_on:
+            - peerprep-mongodb
+        networks:
+            - peerprep-network
+
+    # Database Service
+    peerprep-mongodb:
+        image: mongo:latest
+        restart: always
+        ports:
+            - '27017:27017'
+        container_name: peerprep-mongo-container
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: password
+        volumes:
+            - ./data/db:/data/db
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        networks:
+            - peerprep-network
+
+    # Frontend Service
+    frontend:
+        build: ./frontend
+        container_name: frontend
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./frontend:/app
+            - /app/node_modules
+        env_file:
+            - ./frontend/.env
+        depends_on:
+            - nginx
+        networks:
+            - peerprep-network
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+            - WATCHPACK_POLLING=true
+            - WDS_SOCKET_PORT=0
+
+    # Nginx API Gateway
+    nginx:
+        build: ./backend/api-gateway
+        ports:
+            - "80:80"
+        volumes:
+            - ./backend/api-gateway/nginx.conf:/etc/nginx/nginx.conf
+        networks:
+            - peerprep-network
+
+networks:
+    peerprep-network:
+        driver: bridge

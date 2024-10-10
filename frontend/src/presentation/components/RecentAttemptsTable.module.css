@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.header {
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.headerRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 2em;
+}
