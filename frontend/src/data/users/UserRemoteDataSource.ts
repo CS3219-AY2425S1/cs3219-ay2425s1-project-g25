@@ -1,7 +1,7 @@
 import { BaseApi } from "data/BaseApi";
 import { IUserLoginInput, IUserRegisterInput } from "domain/users/IUser";
 
-const API_URL = ''
+const API_URL = "";
 
 export class UserRemoteDataSource extends BaseApi {
     constructor() {
@@ -16,8 +16,8 @@ export class UserRemoteDataSource extends BaseApi {
     async registerUser(user: IUserRegisterInput) {
         const payload = {
             ...user
-        }
-        return await this.post<any>('/users/', payload);
+        };
+        return await this.post<any>("/users/", payload);
     }
 
     /**
@@ -28,8 +28,20 @@ export class UserRemoteDataSource extends BaseApi {
     async loginUser(user: IUserLoginInput) {
         const payload = {
             ...user
-        }
-        return await this.post<any>('/auth/login', payload);
+        };
+        return await this.post<any>("/auth/login", payload);
+    }
+
+    async logoutUser(userId: string) {
+        return await this.protectedPost<any>("/auth/logout", { userId });
+    }
+
+    async refreshToken() {
+        return await this.protectedGet<any>("/auth/refresh");
+    }
+
+    async verifyToken() {
+        return await this.protectedGet<any>("/auth/verify-token");
     }
 }
 

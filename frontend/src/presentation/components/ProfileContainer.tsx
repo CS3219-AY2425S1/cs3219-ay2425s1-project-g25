@@ -1,12 +1,12 @@
 import styles from "./ProfileContainer.module.css";
 import React from "react";
-import { useUser } from "domain/contexts/userContext";
 import SampleProfilePicture from "../../assets/images/sample-profile-picture.jpg";
 import { EditOutlined } from '@ant-design/icons';
+import { useAuth } from "domain/contexts/AuthContext";
 
 export const ProfileContainer: React.FC = () => {
 
-    const { user } = useUser();
+    const { user } = useAuth();
 
     return (<div className={styles.container}>
         <img className={styles.profilePicture} src={SampleProfilePicture} />

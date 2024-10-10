@@ -11,6 +11,9 @@ export interface IUserLoginInput {
 
 
 export interface IUser {
+    verifyToken(): any;
+    refreshToken(): Promise<any>;
     registerUser(user: IUserRegisterInput): Promise<any>;
     loginUser(user: IUserLoginInput): Promise<any>;
+    logoutUser(userId: string): Promise<any>
 }

@@ -5,15 +5,18 @@ import AppRoutes from "./presentation/routes/AppRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
+import { AuthProvider } from "domain/contexts/AuthContext";
 
 const rootElement = document.getElementById("root") as HTMLElement;
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <AppRoutes />
-            <ToastContainer position="bottom-right" autoClose={5000} closeOnClick closeButton />
-        </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <AppRoutes />
+                <ToastContainer position="bottom-right" autoClose={5000} closeOnClick closeButton />
+            </BrowserRouter>
+        </AuthProvider>
     </React.StrictMode>
 );

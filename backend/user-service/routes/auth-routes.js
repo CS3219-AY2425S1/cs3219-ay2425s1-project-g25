@@ -1,5 +1,5 @@
 import express from "express";
-import { handleLogin, handleVerifyToken } from "../controller/auth-controller.js";
+import { handleLogin, handleLogout, handleVerifyToken, refresh } from "../controller/auth-controller.js";
 import { verifyAccessToken } from "../middleware/basic-access-control.js";
 
 const router = express.Router();
@@ -112,5 +112,52 @@ router.post("/login", handleLogin);
  *         description: Internal server error
  */
 router.get("/verify-token", verifyAccessToken, handleVerifyToken);
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     tags: [Auth]
+ *     summary: User logout
+ *     responses:
+ *       204:
+ *         description: No content
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/logout", handleLogout);
+
+/**
+ * @swagger
+ * /auth/refresh:
+ *   get:
+ *     tags: [Auth]
+ *     summary: Refresh JWT access token
+ *     parameters:
+ *       - in: cookie
+ *         name: refreshToken
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The refresh token used to obtain a new access token
+ *     responses:
+ *       200:
+ *         description: Successfully refreshed access token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: string
+ *                   description: New JWT access token
+ *       401:
+ *         description: Unauthorized - No refresh token or invalid refresh token
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/refresh", refresh);
 
 export default router;

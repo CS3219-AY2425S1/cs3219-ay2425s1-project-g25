@@ -1,3 +1,4 @@
+import AuthClientStore from "data/auth/AuthClientStore";
 import { User } from "domain/entities/User";
 import { IUserRegisterInput, IUserLoginInput } from "domain/users/IUser";
 
@@ -10,6 +11,8 @@ const users: User[] = [
         createdAt: new Date()
     }
 ];
+
+const MOCK_TOKEN = "TOKEN";
 
 export class MockUser {
     private users: User[] = users;
@@ -64,12 +67,44 @@ export class MockUser {
                         message: "Wrong email and/or password"
                     });
                 } else {
-                    foundUser.accessToken = user.email + "TOKEN";
+                    foundUser.accessToken = MOCK_TOKEN;
                     resolve({
                         message: "User logged in",
                         data: foundUser
                     });
                 }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    async logoutUser(userId: string) {
+        return new Promise((resolve, reject) => {
+            try {
+                const foundUser = this.users.find((u) => u._id === userId);
+                AuthClientStore.removeAccessToken();
+                if (!foundUser) {
+                    resolve({ message: "User is not logged in" });
+                } else {
+                    resolve({
+                        message: "User logged out"
+                    });
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    async refreshToken() {
+        return { accessToken: MOCK_TOKEN };
+    }
+
+    async verifyToken() {
+        return new Promise((resolve, reject) => {
+            try {
+                resolve({ message: "Token verified", data: users[0] });
             } catch (error) {
                 reject(error);
             }

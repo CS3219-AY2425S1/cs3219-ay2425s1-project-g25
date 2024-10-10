@@ -1,10 +1,17 @@
-import styles from './LoginPage.module.css';
-import { Col, Row } from 'antd';
-import { AuthLogo } from 'presentation/components/AuthLogo';
-import { LoginForm } from 'presentation/components/LoginForm/LoginForm';
+import styles from "./LoginPage.module.css";
+import { Col, Row } from "antd";
+import { useAuth } from "domain/contexts/AuthContext";
+import { AuthLogo } from "presentation/components/AuthLogo";
+import { LoginForm } from "presentation/components/LoginForm/LoginForm";
+import { Navigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
-    return (
+    const { isLoggedIn } = useAuth();
+    return isLoggedIn === undefined ? (
+        <p>Loading...</p>
+    ) : isLoggedIn ? (
+        <Navigate to="/home" />
+    ) : (
         <div className={styles.container}>
             <div className={styles.scrollContainer}>
                 <Row className={styles.contentRow}>

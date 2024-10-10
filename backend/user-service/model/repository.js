@@ -19,11 +19,13 @@ export async function connectToDB() {
 
   let mongoDBUri = "";
 
-  if (ENV === "PROD") {
+  if (ENV === "production") {
     mongoDBUri = DB_CLOUD_URI;
   } else {
     if (DB_REQUIRE_AUTH === "true") {
-      mongoDBUri = `mongodb://${APP_MONGO_USERNAME || MONGO_INITDB_ROOT_USERNAME}:${APP_MONGO_PASSWORD || MONGO_INITDB_ROOT_PASSWORD}@${DB_HOST}:${DB_PORT}/${DATABASE_NAME}?authSource=admin`;
+      mongoDBUri = `mongodb://${APP_MONGO_USERNAME || MONGO_INITDB_ROOT_USERNAME}:${
+        APP_MONGO_PASSWORD || MONGO_INITDB_ROOT_PASSWORD
+      }@${DB_HOST}:${DB_PORT}/${DATABASE_NAME}?authSource=admin`;
     } else {
       mongoDBUri = `mongodb://${DB_HOST}:${DB_PORT}/${DATABASE_NAME}`;
     }
@@ -59,10 +61,7 @@ export async function findUserByUsername(username) {
 
 export async function findUserByUsernameOrEmail(username, email) {
   return UserModel.findOne({
-    $or: [
-      { username },
-      { email },
-    ],
+    $or: [{ username }, { email }],
   });
 }
 
@@ -80,7 +79,7 @@ export async function updateUserById(userId, username, email, password) {
         password,
       },
     },
-    { new: true },
+    { new: true }
   );
 }
 
@@ -92,7 +91,7 @@ export async function updateUserPrivilegeById(userId, isAdmin) {
         isAdmin,
       },
     },
-    { new: true },
+    { new: true }
   );
 }
 
