@@ -1,0 +1,7 @@
+.dropdown {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 1;
+    color: rgb(189, 189, 189);
+}

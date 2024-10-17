@@ -1,0 +1,22 @@
+.icon {
+    cursor: pointer;
+}
+
+.changePasswordLabel {
+    font-weight: 600;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+button {
+    width: 100%;
+}

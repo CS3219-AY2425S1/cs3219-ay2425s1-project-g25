@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+}
+
+.leftContainer, .rightContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
+.leftContainer {
+    position: relative;
+    align-items: center;
+    padding: 0 5%;
+    background-color: #f1f1f1;
+    row-gap: 5%;
+}
+
+.rightContainer {
+    row-gap: 10%;
+    padding: 5% 3%;
+}
+
+.headline {
+    font-family: monospace;
+    font-size: 3.1em;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    margin-top: 20%;
+}
+
+.selectRow {
+    display: flex;
+    flex-direction: row;
+    column-gap: calc(1rem + 1vw);
+    width: 80%;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+}

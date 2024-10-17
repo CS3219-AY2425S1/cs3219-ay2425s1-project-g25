@@ -1,7 +1,37 @@
 # CS3219 Project (PeerPrep) - AY2425S1
-## Group: Gxx
+## Group: G25
 
-### Note: 
-- You can choose to develop individual microservices within separate folders within this repository **OR** use individual repositories (all public) for each microservice. 
-- In the latter scenario, you should enable sub-modules on this GitHub classroom repository to manage the development/deployment **AND** add your mentor to the individual repositories as a collaborator. 
-- The teaching team should be given access to the repositories as we may require viewing the history of the repository in case of any disputes or disagreements. 
+### Overview
+This project follows a microservices architecture with the following services:
+1. **Frontend** - Port `3000`
+2. **User Service** - Port `3001`
+3. **Question Service** - Port `3002`
+4. **Matching Service** - Port `3003`
+5. **MongoDB** - Port `27017` (Database)
+6. **Nginx API Gateway** - Port `80`
+
+### Running the Project
+
+To run all services, execute the following command in the root directory:
+
+`docker-compose up --build`
+
+Once the containers are up:
+- Frontend: [http://localhost:3000](http://localhost:3000)
+- User Service: [http://localhost:3001](http://localhost:3001)
+- Question Service: [http://localhost:3002](http://localhost:3002)
+- Matching Service: [http://localhost:3003](http://localhost:3003)
+- MongoDB: [http://localhost:27017](http://localhost:27017)
+- Nginx API Gateway: [http://localhost:80](http://localhost:80)
+
+### MongoDB Configuration
+
+- MongoDB runs on port `27017` inside a container named `peerprep-mongo-container`.
+- It is initialized with:
+  - **Username**: `admin`
+  - **Password**: `password`
+- Data is persisted in the `./data/db` directory, and the `init-mongo.js` script initializes the database on startup.
+
+### Nginx API Gateway
+
+- Nginx runs on port `80` and acts as the API gateway for routing requests to the respective services.
