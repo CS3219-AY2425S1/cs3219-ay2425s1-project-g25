@@ -21,6 +21,11 @@
     z-index: 999;
 }
 
+.header div {
+    display: flex;
+    align-items: center;
+}
+
 .content {
     flex: 1;
     display: flex;

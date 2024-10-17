@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { Input, Tag, Button, Modal } from 'antd';
-import { PlusOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import styles from './CategoryFilter.module.css';
-import { Category } from 'domain/entities/Category';
+import React, { useState } from "react";
+import { Input, Tag, Button, Modal } from "antd";
+import { PlusOutlined, DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import styles from "./CategoryFilter.module.css";
+import { Category } from "domain/entities/Category";
 
 const { CheckableTag } = Tag;
 
 interface CategoryFilterProps {
     allCategories: Category[];
-    selectedCategories: string[];
-    onCategoryChange: (categoryId: string, checked: boolean) => void;
+    selectedCategories: Category[];
+    onCategoryChange: (category: Category, checked: boolean) => void;
     onAddCategory: (categoryName: string) => void;
     onDeleteCategory: (categoriesToDeleteIds: string[]) => void;
+    onClearAllCategories: () => void;
+    isEditMode?: boolean;
 }
 
 export const CategoryFilter: React.FC<CategoryFilterProps> = ({
@@ -19,7 +21,9 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
     selectedCategories,
     onCategoryChange,
     onAddCategory,
-    onDeleteCategory
+    onDeleteCategory,
+    onClearAllCategories,
+    isEditMode = true
 }) => {
     const [categorySearchTerm, setCategorySearchTerm] = useState("");
     const [newCategory, setNewCategory] = useState("");
@@ -74,6 +78,14 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
         });
     };
 
+    const handleCategoryChange = (category: Category, checked: boolean) => {
+        onCategoryChange(category, checked);
+    };
+
+    const handleClearAll = () => {
+        onClearAllCategories();
+    };
+
     const filteredCategories = allCategories.filter((category) =>
         category.name.toLowerCase().includes(categorySearchTerm.toLowerCase())
     );
@@ -93,20 +105,16 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
             <div className={styles.categoriesGrid}>
                 {filteredCategories.map((category) => {
                     const isSelectedForDeletion = deletingMode && categoriesToDelete.includes(category._id);
-                    const isSelectedForFiltering = selectedCategories.includes(category._id);
+                    const isSelectedForFiltering = selectedCategories.some((c) => c._id === category._id);
 
                     return (
                         <CheckableTag
                             key={category._id}
-                            checked={
-                                deletingMode
-                                    ? isSelectedForDeletion
-                                    : isSelectedForFiltering
-                            }
+                            checked={deletingMode ? isSelectedForDeletion : isSelectedForFiltering}
                             onChange={(checked) =>
                                 deletingMode
                                     ? handleCategoryToDeleteChange(category._id, checked)
-                                    : onCategoryChange(category._id, checked)
+                                    : handleCategoryChange(category, checked)
                             }
                             className={`${styles.checkableTag} ${
                                 isSelectedForDeletion
@@ -122,46 +130,56 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 })}
             </div>
 
-            <div className={styles.addCategoryContainer}>
-                <Input
-                    placeholder="New Category"
-                    value={newCategory}
-                    onChange={handleNewCategoryChange}
-                    className={styles.newCategoryInput}
-                    onPressEnter={handleAddCategoryClick}
-                />
-                <Button
-                    icon={<PlusOutlined />}
-                    type="primary"
-                    onClick={handleAddCategoryClick}
-                    className={styles.addCategoryButton}
-                >
-                    Add
-                </Button>
-            </div>
-
-            <div className={styles.deleteCategoryContainer}>
-                <Button
-                    icon={<DeleteOutlined />}
-                    type="primary"
-                    danger
-                    onClick={toggleDeleteMode}
-                    className={styles.toggleDeleteButton}
-                >
-                    {deletingMode ? "Cancel Delete" : "Delete Categories"}
-                </Button>
-                {deletingMode && (
+            {isEditMode && (
+                <div className={styles.addCategoryContainer}>
+                    <Input
+                        placeholder="New Category"
+                        value={newCategory}
+                        onChange={handleNewCategoryChange}
+                        className={styles.newCategoryInput}
+                        onPressEnter={handleAddCategoryClick}
+                    />
                     <Button
-                        type="default"
-                        onClick={confirmDeletion}
-                        disabled={categoriesToDelete.length === 0}
-                        className={styles.confirmDeleteButton}
+                        icon={<PlusOutlined />}
+                        type="primary"
+                        onClick={handleAddCategoryClick}
+                        className={styles.addCategoryButton}
                     >
-                        Confirm Deletion
+                        Add
+                    </Button>
+                </div>
+            )}
+
+            <div className={styles.actionButtonsContainer}>
+                {isEditMode && (
+                    <Button
+                        icon={<DeleteOutlined />}
+                        type="primary"
+                        danger
+                        onClick={toggleDeleteMode}
+                        className={styles.toggleDeleteButton}
+                    >
+                        {deletingMode ? "Cancel Delete" : "Delete Categories"}
+                    </Button>
+                )}
+
+                {selectedCategories.length > 0 && (
+                    <Button onClick={handleClearAll} className={styles.clearAllButton}>
+                        Clear All
                     </Button>
                 )}
             </div>
+
+            {deletingMode && isEditMode && (
+                <Button
+                    type="default"
+                    onClick={confirmDeletion}
+                    disabled={categoriesToDelete.length === 0}
+                    className={styles.confirmDeleteButton}
+                >
+                    Confirm Deletion
+                </Button>
+            )}
         </div>
     );
 };
-

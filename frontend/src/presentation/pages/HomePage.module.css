@@ -35,9 +35,6 @@
 }
 
 .selectRow {
-    display: flex;
-    flex-direction: row;
-    column-gap: calc(1rem + 1vw);
     width: 80%;
 }
 

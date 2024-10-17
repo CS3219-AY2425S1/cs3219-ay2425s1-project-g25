@@ -78,12 +78,19 @@
     align-items: center;
     margin-top: 15px;
 }
-
-.toggleDeleteButton {
-    display: flex;
-    align-items: center;
-}
-
 .confirmDeleteButton {
     margin-left: 10px;
+}
+.actionButtonsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.clearAllButton {
+    margin-left: auto;
+}
+
+.toggleDeleteButton {
+    margin-right: 8px;
 }

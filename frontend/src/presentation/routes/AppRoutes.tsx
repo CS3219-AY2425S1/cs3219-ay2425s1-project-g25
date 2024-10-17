@@ -8,23 +8,28 @@ import LoginPage from "presentation/pages/LoginPage";
 import HomePage from "presentation/pages/HomePage";
 import { ProtectedRoute } from "presentation/pages/ProtectedRoute";
 import { AdminProtectedRoute } from "presentation/pages/AdminProtectedRoute";
+import { MatchmakingProvider } from "application/context/MatchmakingContext";
 
 const AppRoutes: React.FC = () => {
     return (
-        <Layout>
-            <Routes>
-                <Route path="/" element={<Navigate to="/login" />} />
-                <Route path="" element={<ProtectedRoute />}>
-                    <Route path="" element={<AdminProtectedRoute />}>
-                        <Route path="/questions" element={<QuestionsPage />} />
-                    </Route>
-                    <Route path="/home" element={<HomePage />} />
-                </Route>
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </Layout>
+            <MatchmakingProvider>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/home" />} />
+                        <Route path="/home" element={<HomePage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+
+                        <Route element={<ProtectedRoute />}>
+                            <Route element={<AdminProtectedRoute />}>
+                                <Route path="/questions" element={<QuestionsPage />} />
+                            </Route>
+                        </Route>
+
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Layout>
+            </MatchmakingProvider>
     );
 };
 
