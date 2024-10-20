@@ -1,0 +1,50 @@
+.layout {
+    max-height: 100vh;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 auto;
+}
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+    margin-top: 64px;
+    width: 100%;
+    height: calc(100vh - 64px);
+}
+
+.header {
+    background-color: white;
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    position: fixed;
+    top: 0;
+    height: 64px;
+    width: 100%;
+    z-index: 999;
+}
+
+.header div {
+    display: flex;
+    align-items: center;
+}
+
+.header .iconGroup {
+    display: flex;
+    align-items: center;
+}
+
+.header .backButton,
+.header .logoutButton {
+    font-size: 24px;
+    margin-left: 8px;
+    cursor: pointer;
+}
