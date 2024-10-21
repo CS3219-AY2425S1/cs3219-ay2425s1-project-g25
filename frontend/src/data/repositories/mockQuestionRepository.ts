@@ -4,7 +4,7 @@ import { mockCategoryRemoteDataSource } from "./mockCategoryRepository";
 
 const { categories } = mockCategoryRemoteDataSource;
 
-const initialQuestions: Question[] = [
+export const initialQuestions: Question[] = [
     {
         _id: "i1",
         code: "1",

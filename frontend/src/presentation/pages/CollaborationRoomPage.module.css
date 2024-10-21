@@ -1,0 +1,49 @@
+.container {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    display: flex;
+}
+
+.editorAndOutputContainer {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.editorContainer {
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    min-height: 0;
+}
+
+.questionContainer {
+    flex-shrink: 0;
+}
+
+.verticalSeparator,
+.horizontalSeparator {
+    transition: background-color 0.1s ease;
+    background-color: #ececec;
+}
+
+.horizontalSeparator:hover,
+.verticalSeparator:hover {
+    background-color: #ffa500;
+}
+
+.verticalSeparator {
+    cursor: col-resize;
+    width: 8px;
+}
+.horizontalSeparator {
+    cursor: row-resize;
+    height: 6px;
+}
+
+.output {
+    flex-shrink: 0;
+    padding: 0 8px;
+}

@@ -127,16 +127,18 @@ export const QuestionDetail: React.FC<QuestionDetailProps> = ({
                 </Card>
             </div>
 
-            <div className={styles.bottomBarContainer}>
-                <Button
-                    type="primary"
-                    icon={<PlayCircleOutlined />}
-                    onClick={handleStartWorking}
-                    className={styles.bottomBarButton}
-                >
-                    Start Working
-                </Button>
-            </div>
+            {onStartWorking && (
+                <div className={styles.bottomBarContainer}>
+                    <Button
+                        type="primary"
+                        icon={<PlayCircleOutlined />}
+                        onClick={handleStartWorking}
+                        className={styles.bottomBarButton}
+                    >
+                        Start Working
+                    </Button>
+                </div>
+            )}
 
             <Modal
                 open={isEditModalOpen}

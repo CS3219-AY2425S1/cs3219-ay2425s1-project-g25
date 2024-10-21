@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout as AntLayout } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Layout.module.css";
 import PeerPrepLogo from "../../../assets/images/PeerPrepLogo.png";
 import MatchingFloatingButton from "../../components/buttons/MatchingFloatingButton";
@@ -13,10 +13,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const { isLoggedIn, logout } = useAuth();
-
-    const navigateHome = () => {
-        navigate("/");
-    };
 
     const handleLogout = async () => {
         try {
@@ -36,9 +32,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <AntLayout className={styles.layout}>
             <Header className={styles.header}>
-                <div onClick={navigateHome} style={{ cursor: "pointer" }}>
-                    <img src={PeerPrepLogo} alt="PeerPrep Logo" width="15%" />
-                </div>
+                <Link to="/" style={{ display: "flex" }}>
+                    <img src={PeerPrepLogo} alt="PeerPrep Logo" width="100px" />
+                </Link>
+
                 <div className={styles.iconGroup}>
                     {showBackButton && <ArrowLeftOutlined className={styles.backButton} onClick={handleBack} />}
                     {isLoggedIn && <LogoutOutlined className={styles.logoutButton} onClick={handleLogout} />}

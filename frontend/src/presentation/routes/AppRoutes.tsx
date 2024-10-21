@@ -10,6 +10,8 @@ import HomePage from "presentation/pages/HomePage";
 import { ProtectedRoute } from "presentation/pages/ProtectedRoute";
 import { AdminProtectedRoute } from "presentation/pages/AdminProtectedRoute";
 import { MatchmakingProvider } from "domain/context/MatchmakingContext";
+import CollaborationRoomPage from "presentation/pages/CollaborationRoomPage";
+import { CollaborationProvider } from "domain/context/CollaborationContext";
 
 const AppRoutes: React.FC = () => {
     return (
@@ -21,6 +23,14 @@ const AppRoutes: React.FC = () => {
                     <Route path="/room/:roomId/:matchUserId" element={<QuestionPage />} />
 
                     <Route element={<ProtectedRoute />}>
+                        <Route
+                            path="/room/:roomId"
+                            element={
+                                <CollaborationProvider>
+                                    <CollaborationRoomPage />
+                                </CollaborationProvider>
+                            }
+                        />
                         <Route path="/" element={<HomePage />} />
 
                         <Route element={<AdminProtectedRoute />}>

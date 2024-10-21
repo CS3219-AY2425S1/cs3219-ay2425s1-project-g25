@@ -94,3 +94,8 @@ export const SIGN_UP_FORM_FIELDS = {
     FIELD_PASSWORD: { label: "Password", name: "password" },
     FIELD_CONFIRM_PASSWORD: { label: "Confirm password", name: "confirmPassword" }
 };
+
+export const AWARENESS_KEYS = {
+    USER_ID: "userId",
+    SELECTED_LANGUAGE: "selectedLanguage"
+}

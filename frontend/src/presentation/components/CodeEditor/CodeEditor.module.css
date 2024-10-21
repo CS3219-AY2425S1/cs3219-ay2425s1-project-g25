@@ -1,0 +1,39 @@
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 8px;
+    overflow-y: hidden;
+}
+
+.toolbar {
+    padding: 4px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.editor {
+    flex: 1;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+button {
+    width: fit-content;
+}
+
+.submitButton {
+    background-color: #ffa500;
+}
+
+.runButton {
+    background-color: black;
+    color: white;
+}

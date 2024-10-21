@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./LoginForm.module.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { handleError } from "presentation/utils/errorHandler";
 import { useAuth } from "domain/context/AuthContext";
 
@@ -8,13 +8,15 @@ export const LoginForm: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
     const { login } = useAuth();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
             await login(email, password);
-            navigate("/");
+            const redirectTo = new URLSearchParams(location.search).get("redirectTo") || "/";
+            navigate(redirectTo);
         } catch (error) {
             console.error("Failed to log in user", error);
             alert(handleError(error, "Failed to log in user"));
