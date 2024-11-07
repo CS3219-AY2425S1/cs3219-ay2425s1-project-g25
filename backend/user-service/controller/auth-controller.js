@@ -11,12 +11,12 @@ export async function handleLogin(req, res, next) {
     try {
       const user = await _findUserByEmail(email);
       if (!user) {
-        throw new UnauthorisedError("Wrong email");
+        throw new UnauthorisedError("Wrong email/password");
       }
 
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        throw new UnauthorisedError("Wrong password");
+        throw new UnauthorisedError("Wrong email/password");
       }
 
       // Generate access and refresh token

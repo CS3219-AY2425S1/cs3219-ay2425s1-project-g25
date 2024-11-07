@@ -1,0 +1,49 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+}
+
+.userRow {
+    font-size: medium;
+    padding: 0 16px;
+    border: 1px solid #ddd; /* Lighter border for a modern look */
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userRow:hover {
+    background-color: #3a3a3a;
+    color: white;
+}
+
+.username,
+.userControls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    width: 100px;
+}
+
+.username {
+    justify-content: start;
+    flex: 1;
+}
+.username p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deleteModalBtnGroup {
+    display: flex;
+    gap: 8px;
+}

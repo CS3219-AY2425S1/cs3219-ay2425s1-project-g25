@@ -108,12 +108,32 @@ export class UserUseCases {
      */
     async getUser(userId: string): Promise<User> {
         const data = await this.user.getUser(userId);
-        if (!data) {
-            throw new AuthenticationError("User not found or access denied");
+        if (!data.data) {
+            throw new AuthenticationError(data.message);
         }
         return data.data;
     }
 
+    async getAllUsers(): Promise<User[]> {
+        const data = await this.user.getAllUsers();
+        if (!data.data) {
+            throw new AuthenticationError(data.message);
+        }
+        return data.data;
+    }
+
+    async deleteUser(userId: string): Promise<void> {
+        await this.user.deleteUser(userId);
+    }
+
+    async updateUserPrivilege(userId: string, isAdmin: boolean): Promise<User> {
+        const data = await this.user.updateUserPrivilege(userId, isAdmin);
+        if (!data.data) {
+            throw new AuthenticationError(data.message);
+        }
+        return data.data;
+    }
+    
     async forgetPassword(email: string): Promise<void> {
         await this.user.forgetPassword(email);
     }

@@ -1,21 +1,20 @@
-import { Button, Form, Input, Tooltip } from "antd";
+import { Button, Form, Input } from "antd";
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
 import { User } from "domain/entities/User";
 import { UPDATE_PROFILE_FORM_FIELDS } from "presentation/utils/constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./UpdateProfileForm.module.css";
 import { useAuth } from "domain/context/AuthContext";
 import { toast } from "react-toastify";
 import { handleError } from "presentation/utils/errorHandler";
-import { useForm, useWatch } from "antd/es/form/Form";
+import { useForm } from "antd/es/form/Form";
 import { IUserUpdateInput } from "domain/users/IUser";
 import { getEqualityValidator, getPasswordStrengthValidator, validateMessages } from "presentation/utils/formUtils";
-import { CustomTooltip } from "../common/CustomTooltip";
 import { PasswordInputLabel } from "../common/PasswordInputLabel/PasswordInputLabel";
 
 interface UpdateProfileFormProps {
     user: User;
-    onSubmit?: () => void;
+    onSubmit?: (updatedUser: User) => void;
     onCancel?: () => void;
 }
 
@@ -53,8 +52,8 @@ export const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ user, onSu
             payload = { ...payload, password: input.password };
         }
         try {
-            await updateUser(payload);
-            onSubmit?.();
+            const updatedUser = await updateUser(user._id, payload);
+            onSubmit?.(updatedUser);
             handleCollapsePasswordFields();
             toast.success("User profile updated");
         } catch (err) {

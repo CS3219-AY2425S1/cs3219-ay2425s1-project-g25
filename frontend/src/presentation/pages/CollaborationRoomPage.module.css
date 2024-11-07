@@ -1,5 +1,5 @@
 .container {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     overflow-x: hidden;
     display: flex;
@@ -19,36 +19,21 @@
     min-height: 0;
 }
 
-.questionContent {
-    height: 100%;
+.outputContainer {
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+
+.leftContainer {
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    position: relative;
-}
-
-.contentArea {
-    position: relative;
-    flex: 1;
-}
-
-.questionDetail,
-.chatFrame {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 100%;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    overflow-y: auto;
 }
 
-.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.visible {
-    opacity: 1;
-    visibility: visible;
+.questionAndChatContainer {
+    flex: 1;
 }
 
 .verticalSeparator,
@@ -70,9 +55,4 @@
 .horizontalSeparator {
     cursor: row-resize;
     height: 6px;
-}
-
-.outputContainer {
-    flex-shrink: 0;
-    overflow-y: auto;
 }

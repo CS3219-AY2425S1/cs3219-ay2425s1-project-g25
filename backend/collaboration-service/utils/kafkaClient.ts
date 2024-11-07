@@ -15,9 +15,33 @@ export const COLLAB_TOPIC = "collaboration_topic";
 export const producer = kafka.producer();
 export const consumer = kafka.consumer({ groupId: "collab-service-group" });
 
-async function initKafka() {
-    await producer.connect();
-    await consumer.connect();
+/**
+ * Initializes Kafka with a retry mechanism.
+ */
+async function initKafka(maxRetries = 5, retryDelay = 2000) {
+    let retries = 0;
+
+    while (retries < maxRetries) {
+        try {
+            await producer.connect();
+            await consumer.connect();
+            console.log("Connected to Kafka");
+            return;
+        } catch (error) {
+            retries++;
+            console.error(
+                `Failed to connect to Kafka (attempt ${retries} of ${maxRetries}):`,
+                error
+            );
+            if (retries >= maxRetries) {
+                console.error("Max retries reached. Exiting.");
+                throw error;
+            }
+            await new Promise((resolve) =>
+                setTimeout(resolve, retryDelay * retries)
+            );
+        }
+    }
 }
 
 /**

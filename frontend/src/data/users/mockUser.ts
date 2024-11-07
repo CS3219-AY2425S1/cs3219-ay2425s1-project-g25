@@ -2,7 +2,7 @@ import AuthClientStore from "data/auth/AuthClientStore";
 import { User } from "domain/entities/User";
 import { IUserRegisterInput, IUserLoginInput, IUserUpdateInput } from "domain/users/IUser";
 
-const users: User[] = [
+let users: User[] = [
     {
         _id: "1",
         username: "SampleUserName",
@@ -156,6 +156,31 @@ export class MockUser {
         });
     }
 
+    async getAllUsers(): Promise<any> {
+        return new Promise((resolve, reject) => ({ message: "Fetched all users", data: resolve(users) }));
+    }
+
+    async deleteUser(userId: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            users = users.filter((user) => user._id !== userId);
+        });
+    }
+
+    async updateUserPrivilege(userId: string, isAdmin: boolean): Promise<any> {
+        return new Promise((resolve, reject) => {
+            try {
+                const foundUser = this.users.find((u) => u._id === userId);
+                if (!foundUser) {
+                    resolve({ message: "User not found" });
+                } else {
+                    foundUser.isAdmin = isAdmin;
+                    resolve({ message: "User privileges updated", data: foundUser });
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
     async forgetPassword(email: string): Promise<any> {}
 
     async resetPassword(password: string, token: string): Promise<any> {}

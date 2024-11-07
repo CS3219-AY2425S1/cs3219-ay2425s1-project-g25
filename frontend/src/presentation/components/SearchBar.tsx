@@ -6,9 +6,10 @@ import styles from "./SearchBar.module.css";
 interface SearchBarProps {
     searchTerm: string;
     onSearch: (term: string) => void;
+    placeholder?: string;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, onSearch }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, onSearch, placeholder }) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onSearch(e.target.value);
     };
@@ -17,7 +18,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, onSearch }) =>
         <div className={styles.searchBarWrapper}>
             <SearchOutlined className={styles.searchIcon} />
             <Input
-                placeholder="Search questions..."
+                placeholder={placeholder ?? "Search..."}
                 value={searchTerm}
                 onChange={handleInputChange}
                 allowClear

@@ -2,6 +2,6 @@ import express from 'express';
 
 const router = express.Router();
 
-// router.post('/', startCollaboration);
+router.get("/test", (req, res) => { res.send("OK!"); });
 
 export default router;

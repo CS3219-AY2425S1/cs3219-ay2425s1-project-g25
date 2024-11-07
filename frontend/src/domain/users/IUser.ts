@@ -25,6 +25,9 @@ export interface IUser {
     logoutUser(userId: string): Promise<any>;
     updateUser(userId: string, userUpdateInput: IUserUpdateInput): Promise<any>;
     getUser(userId: string): Promise<any>;
+    getAllUsers(): Promise<any>;
+    deleteUser(userId: string): Promise<any>;
+    updateUserPrivilege(userId: string, isAdmin: boolean): Promise<any>;
     forgetPassword(email: string): Promise<any>;
     resetPassword(password: string, token: string): Promise<any>;
 }

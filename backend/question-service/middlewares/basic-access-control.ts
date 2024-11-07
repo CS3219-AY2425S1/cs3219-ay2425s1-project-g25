@@ -26,6 +26,7 @@ export function verifyAccessToken(req: any, res: any, next: any) {
       return res.status(401).json({ message: `Unauthorized: ${err.message}` });
     }
     req.isAdmin = user.isAdmin;
+    req.userId = user.id;
     next();
   });
 }

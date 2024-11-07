@@ -13,6 +13,8 @@ import { verifyAccessToken, verifyIsAdmin, verifyIsOwnerOrAdmin } from "../middl
 
 const router = express.Router();
 
+router.get("/test", (req, res) => { res.send("OK!"); });
+
 /**
  * @swagger
  * /users:

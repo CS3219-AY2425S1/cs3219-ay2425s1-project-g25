@@ -92,3 +92,9 @@ rebuilding the services by running `docker-compose up --build` again.
 ### Nginx API Gateway
 
 - Nginx runs on port `80` and acts as the API gateway for routing requests to the respective services.
+
+### Kubernetes Auto Pod Scaling
+
+All files for Kubernetes deployment and auto scaling of services can be found in the `/kubernetes/` folder.
+
+Refer to the [README](/kubernetes/README.md) in the kubernetes folder for more information.

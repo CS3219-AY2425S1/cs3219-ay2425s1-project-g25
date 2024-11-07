@@ -11,7 +11,8 @@ interface AuthContextType {
     login: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
     register: (email: string, password: string, username: string) => Promise<void>;
-    updateUser: (userUpdateInput: IUserUpdateInput) => Promise<void>;
+    updateUser: (userId: string, userUpdateInput: IUserUpdateInput) => Promise<User>;
+    deactivateUser: (userId: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -70,10 +71,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         handleSuccessfulAuth(accessToken, user);
     };
 
-    const updateUser = async (userUpdateInput: IUserUpdateInput) => {
-        if (user) {
-            const updatedUser = await userUseCases.updateUser(user?._id, userUpdateInput);
+    const updateUser = async (userId: string, userUpdateInput: IUserUpdateInput) => {
+        const updatedUser = await userUseCases.updateUser(userId, userUpdateInput);
+        if (userId === user?._id) {
             setUser(updatedUser);
+        }
+        return updatedUser;
+    };
+
+    const deactivateUser = async (userId: string) => {
+        await userUseCases.deleteUser(userId);
+        if (userId === user?._id) {
+            logout();
         }
     };
 
@@ -87,7 +96,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const isUserAdmin = true;
 
     return (
-        <AuthContext.Provider value={{ user, isLoggedIn, isUserAdmin, login, logout, register, updateUser }}>
+        <AuthContext.Provider
+            value={{ user, isLoggedIn, isUserAdmin, login, logout, register, updateUser, deactivateUser }}
+        >
             {children}
         </AuthContext.Provider>
     );

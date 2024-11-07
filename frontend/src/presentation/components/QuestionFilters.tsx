@@ -214,7 +214,7 @@ export const QuestionFilters: React.FC<QuestionFiltersProps> = ({
 
             {showSearchBar && (
                 <div className={styles.searchBarContainer}>
-                    <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
+                    <SearchBar searchTerm={searchTerm} onSearch={handleSearch} placeholder="Search questions..." />
                 </div>
             )}
         </div>

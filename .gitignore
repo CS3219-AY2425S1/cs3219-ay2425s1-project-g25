@@ -49,3 +49,4 @@ ehthumbs.db
 /addon/chat/Chatio/Properties/ServiceDependencies/Chatiox - Web Deploy
 /addon/chat/Chatio/.vs/Chatio
 /addon/chat/Chatio/bin
+/backend/collaboration-service/coverage

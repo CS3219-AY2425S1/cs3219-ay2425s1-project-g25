@@ -51,6 +51,17 @@ export class UserRemoteDataSource extends BaseApi {
         return await this.protectedGet<any>(`/users/${userId}`);
     }
 
+    async getAllUsers() {
+        return await this.protectedGet<any>("/users/");
+    }
+
+    async deleteUser(userId: string) {
+        return await this.protectedDelete<any>(`/users/${userId}`);
+    }
+
+    async updateUserPrivilege(userId: string, isAdmin: boolean) {
+        return await this.protectedPatch(`/users/${userId}/privilege`, { isAdmin });
+    }
     async forgetPassword(email: string) {
         return await this.post<any>("/users/forgetPassword", { email });
     }

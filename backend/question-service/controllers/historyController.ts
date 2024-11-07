@@ -1,67 +1,49 @@
-import { Response } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import historyEntryModel from '../models/HistoryEntry';
-import { AuthenticatedRequest } from 'middlewares/auth';
+import { Response, Request } from "express";
+import historyEntryModel from "../models/HistoryEntry";
 
 const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) return error.message;
-  return 'An unexpected error occurred';
+  return "An unexpected error occurred";
 };
 
-const extractUserIdFromToken = (req: AuthenticatedRequest): string | null => {
-    const userId = req.userId;
-    if (!userId) {
-      console.error('userId missing - Token is likely invalid');
-      return null;
-    }
-    return userId
-  };
-
-export const getUserHistoryEntries = async (req: AuthenticatedRequest, res: Response) => {
+export const getUserHistoryEntries = async (req: any, res: Response) => {
   try {
-    const userId = extractUserIdFromToken(req);
+    const userId = req.userId;
 
-    if (!userId) {
-      return res.status(401).json({ error: 'Invalid or missing token' });
-    }
-
-    const historyEntries = await historyEntryModel.find({ userId })
-    .populate({
-      path: 'question',
+    const historyEntries = await historyEntryModel.find({ userId }).populate({
+      path: "question",
       populate: {
-        path: 'categories',
-        model: 'category',
+        path: "categories",
+        model: "category",
       },
     });
     const historyViewModels = historyEntries.map((entry) => {
       return {
         id: entry._id,
         key: entry._id,
+        roomId: entry.roomId,
         attemptStartedAt: entry.attemptStartedAt.getTime(),
         attemptCompletedAt: entry.attemptCompletedAt.getTime(),
         title: entry.question.title,
         difficulty: entry.question.difficulty,
         topics: entry.question.categories.map((cat: any) => cat.name),
-        attemptCode: entry.attemptCode,
-    }});
+        attemptCodes: entry.attemptCodes,
+      };
+    });
     res.status(200).json(historyViewModels);
   } catch (error) {
     res.status(500).json({ error: getErrorMessage(error) });
   }
 };
 
-export const createOrUpdateUserHistoryEntry = async (req: AuthenticatedRequest, res: Response) => {
+export const createOrUpdateUserHistoryEntry = async (req: any, res: Response) => {
   try {
-    const userId = extractUserIdFromToken(req);
-
-    if (!userId) {
-      return res.status(401).json({ error: 'Invalid or missing token' });
-    }
+    const userId = req.userId;
 
     const { questionId, roomId, attemptStartedAt, attemptCompletedAt, collaboratorId, attemptCode } = req.body;
 
     if (!roomId) {
-      return res.status(400).json({ error: 'roomId is required' });
+      return res.status(400).json({ error: "roomId is required" });
     }
 
     const existingEntry = await historyEntryModel.findOne({ userId, roomId });
@@ -71,7 +53,7 @@ export const createOrUpdateUserHistoryEntry = async (req: AuthenticatedRequest, 
       existingEntry.attemptStartedAt = attemptStartedAt;
       existingEntry.attemptCompletedAt = attemptCompletedAt;
       existingEntry.collaboratorId = collaboratorId;
-      existingEntry.attemptCode = attemptCode;
+      existingEntry.attemptCodes.push(attemptCode);
 
       const updatedEntry = await existingEntry.save();
 
@@ -84,7 +66,7 @@ export const createOrUpdateUserHistoryEntry = async (req: AuthenticatedRequest, 
         attemptStartedAt,
         attemptCompletedAt,
         collaboratorId,
-        attemptCode,
+        attemptCodes: [attemptCode],
       });
 
       const savedEntry = await newHistoryEntry.save();
@@ -96,35 +78,46 @@ export const createOrUpdateUserHistoryEntry = async (req: AuthenticatedRequest, 
   }
 };
 
-export const deleteUserHistoryEntry = async (req: AuthenticatedRequest, res: Response) => {
+export const removeRoomIdPresence = async (req: any, res: Response) => {
   try {
-    const userId = extractUserIdFromToken(req);
+    const userId = req.userId;
+    const { roomId } = req.params;
 
-    if (!userId) {
-      return res.status(401).json({ error: 'Invalid or missing token' });
-    }
+    const existingEntries = await historyEntryModel.find({ roomId });
+    const updatedEntries: string[] = [];
 
+    existingEntries.forEach(async (entry) => {
+      entry.roomId = "";
+      await entry.save();
+      updatedEntries.push(entry._id.toString());
+    });
+
+    return res.status(200).json({ updatedEntries });
+  } catch (error) {
+    return res.status(500).json({ error: getErrorMessage(error) });
+  }
+};
+
+export const deleteUserHistoryEntry = async (req: any, res: Response) => {
+  try {
+    const userId = req.userId;
     const { id } = req.params;
 
     const deletedEntry = await historyEntryModel.findOneAndDelete({ _id: id, userId });
 
     if (!deletedEntry) {
-      return res.status(404).json({ message: 'History entry not found' });
+      return res.status(404).json({ message: "History entry not found" });
     }
 
-    res.status(200).json({ message: 'History entry deleted successfully' });
+    res.status(200).json({ message: "History entry deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: getErrorMessage(error) });
   }
 };
 
-export const deleteUserHistoryEntries = async (req: AuthenticatedRequest, res: Response) => {
+export const deleteUserHistoryEntries = async (req: any, res: Response) => {
   try {
-    const userId = extractUserIdFromToken(req);
-
-    if (!userId) {
-      return res.status(401).json({ error: 'Invalid or missing token' });
-    }
+    const userId = req.userId;
 
     const { ids } = req.body;
     if (!Array.isArray(ids)) {
@@ -138,13 +131,9 @@ export const deleteUserHistoryEntries = async (req: AuthenticatedRequest, res: R
   }
 };
 
-export const deleteAllUserHistoryEntries = async (req: AuthenticatedRequest, res: Response) => {
+export const deleteAllUserHistoryEntries = async (req: any, res: Response) => {
   try {
-    const userId = extractUserIdFromToken(req);
-
-    if (!userId) {
-      return res.status(401).json({ error: 'Invalid or missing token' });
-    }
+    const userId = req.userId;
 
     const result = await historyEntryModel.deleteMany({ userId });
     res.status(200).json({

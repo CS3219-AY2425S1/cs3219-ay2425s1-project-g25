@@ -1,19 +1,21 @@
-import express from 'express';
+import express from "express";
 import {
   getUserHistoryEntries,
   createOrUpdateUserHistoryEntry,
   deleteUserHistoryEntry,
   deleteUserHistoryEntries,
   deleteAllUserHistoryEntries,
-} from '../controllers/historyController';
-import { authenticateToken } from '../middlewares/auth';
+  removeRoomIdPresence,
+} from "../controllers/historyController";
+import { verifyAccessToken } from "../middlewares/basic-access-control";
 
 const router = express.Router();
 
-router.get("/", authenticateToken, getUserHistoryEntries);
-router.post("/", authenticateToken, createOrUpdateUserHistoryEntry);
-router.delete("/user/:id", authenticateToken, deleteUserHistoryEntry);
-router.delete("/user", authenticateToken, deleteUserHistoryEntries);
-router.delete("/all", authenticateToken, deleteAllUserHistoryEntries);
+router.get("/", verifyAccessToken, getUserHistoryEntries);
+router.post("/", verifyAccessToken, createOrUpdateUserHistoryEntry);
+router.post("/room/:id", verifyAccessToken, removeRoomIdPresence);
+router.delete("/user/:id", verifyAccessToken, deleteUserHistoryEntry);
+router.delete("/user", verifyAccessToken, deleteUserHistoryEntries);
+router.delete("/all", verifyAccessToken, deleteAllUserHistoryEntries);
 
 export default router;

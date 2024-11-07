@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Copy .env.example to .env, overwriting if .env exists
+find . -name ".env.example" | while read -r EXAMPLE_FILE; do
+    ENV_FILE="${EXAMPLE_FILE%.example}"
+    cp "$EXAMPLE_FILE" "$ENV_FILE"
+    echo "Replaced or created .env from .env.example at $ENV_FILE"
+done
+
 # Define the docker-compose files with relative paths
 COMPOSE_FILES=(
     "./docker-compose.yml"
@@ -12,14 +19,5 @@ for FILE in "${COMPOSE_FILES[@]}"; do
         docker-compose -f "$FILE" up -d
     else
         echo "File not found: $FILE"
-    fi
-done
-
-# Copy .env.example to .env if .env does not exist
-find . -name ".env.example" | while read -r EXAMPLE_FILE; do
-    ENV_FILE="${EXAMPLE_FILE%.example}"
-    if [ ! -f "$ENV_FILE" ]; then
-        cp "$EXAMPLE_FILE" "$ENV_FILE"
-        echo "Created .env from .env.example at $ENV_FILE"
     fi
 done

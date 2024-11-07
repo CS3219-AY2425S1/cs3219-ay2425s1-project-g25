@@ -2,27 +2,44 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-.leftContainer, .rightContainer {
+.leftContainer,
+.rightContainer {
     display: flex;
     flex-direction: column;
-    width: 50%;
-    height: 100%;
+    width: 30%;
+    position: relative;
 }
 
 .leftContainer {
     position: relative;
     align-items: center;
-    padding: 0 5%;
+    padding: 0 12px;
     background-color: #f1f1f1;
     row-gap: 5%;
 }
 
 .rightContainer {
-    row-gap: 10%;
-    padding: 5% 3%;
+    width: 70%;
+    height: 100%;
+    position: relative;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    box-sizing: border-box;
+}
+
+.profileContainer {
+    position: absolute;
+}
+.recentAttempsContainer {
+    margin-top: 160px;
+    overflow-y: auto;
+    width: 100%;
 }
 
 .headline {

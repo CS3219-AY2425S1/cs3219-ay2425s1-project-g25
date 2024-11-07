@@ -10,6 +10,7 @@ import { verifyAccessToken, verifyIsAdmin } from "../middlewares/basic-access-co
 
 const router = express.Router();
 
+router.get("/test", (req, res) => { res.send("OK!"); });
 router.get("/", getAllQuestions);
 router.post("/", verifyAccessToken, verifyIsAdmin, createQuestion);
 router.put("/:id", verifyAccessToken, verifyIsAdmin, updateQuestion);

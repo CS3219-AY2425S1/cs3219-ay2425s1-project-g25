@@ -9,7 +9,7 @@ interface ChatFrameProps {
 
 const ChatFrame: React.FC<ChatFrameProps> = ({ roomId }) => {
     const token = AuthClientStore.getAccessToken();
-    const chatUrl = `http://localhost:7000/chat/${encodeURIComponent(roomId)}?token=${token}`;
+    const chatUrl = `https://talkio-azha.vercel.app/chat/${encodeURIComponent(roomId)}?token=${token}`;
 
     return (
         <div className={styles.chatFrameWrapper}>

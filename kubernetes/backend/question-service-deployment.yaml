@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: question-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: question-service
+  template:
+    metadata:
+      labels:
+        app: question-service
+    spec:
+      containers:
+      - name: question-service-container
+        image: rjkoh/cs3219-ay2425s1-project-g25-question-service:latest
+        ports:
+          - containerPort: 3002
+        env:
+          - name: REDIS_HOST
+            value: peerprep-redis.default.svc.cluster.local
+          - name: DB_HOST
+            value: peerprep-mongodb.default.svc.cluster.local
+          - name: KAFKA_HOST
+            value: peerprep-kafka.default.svc.cluster.local
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: question-service
+spec:
+  selector:
+    app: question-service
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002
+  type: ClusterIP

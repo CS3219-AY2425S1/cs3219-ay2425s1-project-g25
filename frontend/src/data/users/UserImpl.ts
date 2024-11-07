@@ -34,6 +34,17 @@ export class UserImpl implements IUser {
         return this.dataSource.getUser(userId);
     }
 
+    async getAllUsers(): Promise<any> {
+        return this.dataSource.getAllUsers();
+    }
+
+    async deleteUser(userId: string): Promise<any> {
+        return this.dataSource.deleteUser(userId);
+    }
+
+    async updateUserPrivilege(userId: string, isAdmin: boolean): Promise<any> {
+        return this.dataSource.updateUserPrivilege(userId, isAdmin);
+    }
     async forgetPassword(email: string): Promise<any> {
         return this.dataSource.forgetPassword(email);
     }

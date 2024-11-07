@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
-import { CloudUploadOutlined } from "@ant-design/icons";
+import { Button, Modal, message } from "antd";
+import { SaveOutlined } from "@ant-design/icons";
 import styles from "./CodeActionButtons.module.css";
 import { historyUseCases } from "domain/usecases/HistoryUseCases";
 
-interface SubmitButtonProps {
+interface SaveButtonProps {
     getEditorText: () => string;
     questionId: string;
     roomId: string;
@@ -12,7 +12,7 @@ interface SubmitButtonProps {
     collaboratorId: string;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({
+const SaveButton: React.FC<SaveButtonProps> = ({
     getEditorText,
     questionId,
     roomId,
@@ -28,20 +28,31 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
         setIsModalVisible(true);
     };
 
-    const handleOk = async () => {
-        await historyUseCases.createOrUpdateUserHistory(
-            questionId,
-            roomId,
-            attemptStartedAt.getTime().toString(),
-            Date.now().toString(),
-            collaboratorId,
-            getEditorText(),
-        );
+    const handleCancel = () => {
         setIsModalVisible(false);
     };
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
+    const handleSave = async () => {
+        try {
+            await historyUseCases.createOrUpdateUserHistory(
+                questionId,
+                roomId,
+                attemptStartedAt.getTime().toString(),
+                Date.now().toString(),
+                collaboratorId,
+                getEditorText(),
+            );
+            message.success("Your work has been saved successfully.");
+            setIsModalVisible(false);
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error("Failed to save:", error.message);
+                message.error(`Failed to save: ${error.message}`);
+            } else {
+                console.error("Unknown error occurred during saving");
+                message.error("Unknown error occurred during saving");
+            }
+        }
     };
 
     return (
@@ -49,26 +60,30 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
             <Button
                 onClick={showModal}
                 type="text"
-                icon={<CloudUploadOutlined />}
+                icon={<SaveOutlined />}
                 className={styles.submitButton}
             >
-                Submit
+                Save
             </Button>
             <Modal
-                title="Editor Content"
+                title="Confirm Save"
                 open={isModalVisible}
-                onOk={handleOk}
                 onCancel={handleCancel}
                 footer={[
-                    <Button key="ok" type="primary" onClick={handleOk}>
-                        OK
+                    <Button key="cancel" onClick={handleCancel} color='danger'>
+                        Cancel
+                    </Button>,
+                    <Button key="save" type="primary" onClick={handleSave}>
+                        Save
                     </Button>,
                 ]}
+                destroyOnClose
             >
+                <p>Do you want to save your current work?</p>
                 <pre className={styles.modalContent}>{editorContent}</pre>
             </Modal>
         </>
     );
 };
 
-export default SubmitButton;
+export default SaveButton;

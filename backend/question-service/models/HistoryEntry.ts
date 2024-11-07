@@ -9,7 +9,7 @@ export interface HistoryEntry extends mongoose.Document {
   attemptStartedAt: Date;
   attemptCompletedAt: Date;
   collaboratorId: string;
-  attemptCode: string;
+  attemptCodes: string[];
 }
 
 const historyEntrySchema: Schema = new Schema<HistoryEntry>({
@@ -19,7 +19,7 @@ const historyEntrySchema: Schema = new Schema<HistoryEntry>({
   attemptStartedAt: { type: Date, required: true, default: Date.now() },
   attemptCompletedAt: { type: Date, required: true, default: Date.now() },
   collaboratorId: { type: String, required: true },
-  attemptCode: { type: String, required: true },
+  attemptCodes: [{ type: String, required: true }],
 });
 
 const historyEntryModel = mongoose.model<HistoryEntry>('historyEntry', historyEntrySchema);

@@ -40,10 +40,7 @@ const HomePage: React.FC = () => {
                 selectedCategories: filters.selectedCategories,
                 selectedDifficulty: filters.selectedDifficulty
             });
-            startMatching(
-                correctedInput.selectedCategories[0].name,
-                correctedInput.selectedDifficulty
-            );
+            startMatching(correctedInput.selectedCategories[0].name, correctedInput.selectedDifficulty);
         } catch (error) {
             if (error instanceof ValidationError) {
                 message.error(error.message);
@@ -86,8 +83,12 @@ const HomePage: React.FC = () => {
                 </Tooltip>
             </div>
             <div className={styles.rightContainer}>
-                <ProfileContainer />
-                <RecentAttemptsTable />
+                <div className={styles.profileContainer}>
+                    <ProfileContainer />
+                </div>
+                <div className={styles.recentAttempsContainer}>
+                    <RecentAttemptsTable />
+                </div>
             </div>
             <MatchingModal onRetry={handleRetry} />
         </div>

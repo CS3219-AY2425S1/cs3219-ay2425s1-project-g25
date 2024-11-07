@@ -1,22 +1,65 @@
+// RecentAttemptsTable.tsx
 import React, { useEffect, useState } from "react";
-import { Table, Tag, Typography, Badge, Button, message, Empty, Modal } from 'antd';
+import { Table, Tag, Typography, Badge, Button, message, Empty, Modal, Tabs, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import styles from "./RecentAttemptsTable.module.css";
 import { HistoryEntry } from "domain/entities/HistoryEntry";
 import { historyUseCases } from "domain/usecases/HistoryUseCases";
 import { ReactMarkdown } from "./common/ReactMarkdown";
+import TabPane from "antd/es/tabs/TabPane";
+import { useNavigate } from "react-router-dom";
+import { EyeOutlined, TeamOutlined } from "@ant-design/icons"; // Importing additional icons
+
+const formatDate = (dateString: string): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  };
+  const date = new Date(dateString);
+  return date.toLocaleString(undefined, options);
+};
+
+const calculateDuration = (start: string, end: string): string => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const durationMs = endDate.getTime() - startDate.getTime();
+
+  const totalSeconds = Math.floor(durationMs / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  let duration = '';
+  if (hours > 0) duration += `${hours}h `;
+  if (minutes > 0) duration += `${minutes}m `;
+  if (seconds > 0) duration += `${seconds}s`;
+
+  return duration.trim() || '0s';
+};
 
 export const RecentAttemptsTable: React.FC = () => {
+  const navigate = useNavigate(); // Initialized navigate
+
+  // State Definitions
   const [recentAttemptsData, setRecentAttemptsData] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  
+  // Modal State for Viewing Codes
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [currentCode, setCurrentCode] = useState<string>("");
+  const [currentCodes, setCurrentCodes] = useState<string[]>([]);
+  const [currentAttemptId, setCurrentAttemptId] = useState<string>(""); // To identify which attempt's codes are being viewed
 
+  // Fetch Recent Attempts on Component Mount
   useEffect(() => {
     fetchRecentAttempts();
   }, []);
 
+  // Function to Fetch Recent Attempts
   const fetchRecentAttempts = async () => {
     setLoading(true);
     try {
@@ -35,6 +78,7 @@ export const RecentAttemptsTable: React.FC = () => {
     }
   };
 
+  // Function to Clear All Attempts
   const handleClearAllAttempts = async () => {
     try {
       await historyUseCases.deleteAllUserHistories();
@@ -51,6 +95,7 @@ export const RecentAttemptsTable: React.FC = () => {
     }
   };
 
+  // Function to Delete Selected Attempts
   const handleDeleteSelectedAttempts = async () => {
     try {
       if (selectedRowKeys.length === 0) {
@@ -74,16 +119,21 @@ export const RecentAttemptsTable: React.FC = () => {
     }
   };
 
-  const showModal = (code: string) => {
-    setCurrentCode(code);
+  // Function to Show Modal with Codes
+  const showModal = (attemptCodes: string[], attemptId: string) => {
+    setCurrentCodes(attemptCodes);
+    setCurrentAttemptId(attemptId);
     setIsModalVisible(true);
   };
 
+  // Function to Close Modal
   const handleModalClose = () => {
     setIsModalVisible(false);
-    setCurrentCode("");
+    setCurrentCodes([]);
+    setCurrentAttemptId("");
   };
 
+  // Define Columns for the Table
   const columns: ColumnsType<HistoryEntry> = [
     {
       title: 'Date',
@@ -91,12 +141,30 @@ export const RecentAttemptsTable: React.FC = () => {
       key: 'date',
       sorter: (a, b) => new Date(a.attemptCompletedAt).getTime() - new Date(b.attemptCompletedAt).getTime(),
       render: (_text, record) => {
-        const startDate = new Date(record.attemptStartedAt).toLocaleString();
-        const endDate = new Date(record.attemptCompletedAt).toLocaleString();
+        const formattedStartDate = formatDate(record.attemptStartedAt);
+        const formattedEndDate = formatDate(record.attemptCompletedAt);
+        const duration = calculateDuration(record.attemptStartedAt, record.attemptCompletedAt);
         return (
-          <span>
-            {startDate} - {endDate}
-          </span>
+          <div className={styles.dateContainer}>
+            <div>
+              <Typography.Text strong>Attempt Start:</Typography.Text>
+            </div>
+            <div>
+              {formattedStartDate}
+            </div>
+            <div>
+              <Typography.Text strong>Latest Submission:</Typography.Text>
+            </div>
+            <div>
+              {formattedEndDate}
+            </div>
+            <div>
+              <Typography.Text strong>Duration:</Typography.Text>
+            </div>
+            <div>
+              {duration}
+            </div>
+          </div>
         );
       },
     },
@@ -141,12 +209,27 @@ export const RecentAttemptsTable: React.FC = () => {
       ),
     },
     {
-      title: 'Action',
+      title: 'Actions',
       key: 'action',
       render: (_text, record) => (
-        <Button type="link" onClick={() => showModal(record.attemptCode)}>
-          View Code
-        </Button>
+        <Space size="middle" className={styles.actionsButton}>
+          <Button
+            type="link"
+            onClick={() => showModal(record.attemptCodes, record.key)}
+            icon={<EyeOutlined />}
+            aria-label={`View past code for attempt ${record.key}`}
+          >
+            View Past Code
+          </Button>
+          <Button
+            type="link"
+            onClick={() => navigate(`/room/${record.roomId}`)}
+            icon={<TeamOutlined />}
+            aria-label={`Rejoin room ${record.roomId}`}
+          >
+            Rejoin
+          </Button>
+        </Space>
       ),
     },
   ];
@@ -183,12 +266,11 @@ export const RecentAttemptsTable: React.FC = () => {
         locale={{
           emptyText: <Empty description="No attempts yet" />,
         }}
-        rowKey="key" // Ensure that each row has a unique key
+        rowKey="key"
       />
       
-      {/* Modal for Viewing Code */}
       <Modal
-        title="Attempt Code"
+        title="Past Code Attempts"
         open={isModalVisible}
         onCancel={handleModalClose}
         footer={[
@@ -196,10 +278,40 @@ export const RecentAttemptsTable: React.FC = () => {
             Close
           </Button>,
         ]}
-        width={800}
+        width={900}
+        bodyStyle={{ padding: 0 }}
       >
-        <ReactMarkdown isReadOnly value={currentCode} />
+        {currentCodes.length > 0 ? (
+          <Tabs
+            defaultActiveKey={currentCodes.length.toString()}
+            type="card"
+            tabPosition="top"
+            size="small"
+            style={{ height: '600px', overflow: 'auto' }}
+          >
+            {currentCodes.map((code, index) => {
+              const tabKey = (index + 1).toString();
+              const tabLabel = `Attempt ${index + 1}`;
+              const formattedCode = `\`\`\`\n${code.replace(/\r\n/g, '\n\n')}\n\`\`\``;
+              return (
+                <TabPane
+                  tab={tabLabel}
+                  key={tabKey}
+                  style={{ height: '100%', overflow: 'auto' }}
+                >
+                  <div style={{ height: '100%', overflow: 'auto', padding: '16px' }}>
+                    <ReactMarkdown isReadOnly value={formattedCode} />
+                  </div>
+                </TabPane>
+              );
+            })}
+          </Tabs>
+        ) : (
+          <Empty description="No code available" />
+        )}
       </Modal>
     </div>
   );
 };
+
+export default RecentAttemptsTable;
