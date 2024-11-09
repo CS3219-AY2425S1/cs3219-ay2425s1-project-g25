@@ -1,5 +1,3 @@
-import { User } from "domain/entities/User";
-
 export interface IUserRegisterInput {
     username: string;
     email: string;

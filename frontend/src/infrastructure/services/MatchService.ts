@@ -5,7 +5,7 @@ class MatchService {
     private onMatchCancelCallbacks: ((data: any) => void)[] = [];
     private onMatchFailCallbacks: ((data: any) => void)[] = [];
 
-    private eventsRegistered: boolean = false;
+    private eventsRegistered = false;
 
     private setupEventListeners() {
         if (this.eventsRegistered) return;

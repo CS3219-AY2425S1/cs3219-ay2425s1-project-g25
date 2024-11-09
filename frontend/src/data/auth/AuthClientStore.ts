@@ -15,7 +15,7 @@ class AuthClientStore {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
     }
     static containsAccessToken() {
-        return localStorage.hasOwnProperty(ACCESS_TOKEN_KEY);
+        return localStorage.getItem(ACCESS_TOKEN_KEY) !== null;
     }
 }
 

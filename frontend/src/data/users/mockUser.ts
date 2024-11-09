@@ -157,12 +157,15 @@ export class MockUser {
     }
 
     async getAllUsers(): Promise<any> {
-        return new Promise((resolve, reject) => ({ message: "Fetched all users", data: resolve(users) }));
+        return new Promise((resolve, _) => {
+            resolve({ message: "Fetched all users", data: users });
+        });
     }
 
     async deleteUser(userId: string): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _) => {
             users = users.filter((user) => user._id !== userId);
+            resolve({ message: "User deleted successfully" });
         });
     }
 
@@ -181,9 +184,13 @@ export class MockUser {
             }
         });
     }
-    async forgetPassword(email: string): Promise<any> {}
-
-    async resetPassword(password: string, token: string): Promise<any> {}
+    async forgetPassword(email: string): Promise<any> {
+        return { message: `Password reset request received for ${email}.` };
+    }
+    
+    async resetPassword(password: string, token: string): Promise<any> {
+        return { message: "Password has been successfully reset" };
+    }
 }
 
 export const mockUser = new MockUser();
