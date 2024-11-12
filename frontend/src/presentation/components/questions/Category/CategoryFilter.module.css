@@ -1,0 +1,96 @@
+.categoryDropdownContainer {
+    padding: 16px;
+    box-shadow: none;
+}
+
+.categorySearchBar {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.categoriesGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 300px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.checkableTag {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.85);
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 14px;
+    height: 24px;
+    line-height: 16px;
+}
+
+.checkableTag:hover {
+    background-color: #d9d9d9;
+}
+
+.selectedTag {
+    background-color: #1890ff;
+    color: #fff;
+}
+
+.deleteSelectedTag {
+    background-color: #ff4d4f !important;
+    color: #fff !important;
+    border: none !important;
+    height: 24px !important;
+    padding: 4px 8px !important;
+}
+
+.instructionText {
+    margin: 10px 0;
+    color: #ff4d4f;
+    font-weight: bold;
+    text-align: center;
+}
+
+.addCategoryContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.newCategoryInput {
+    width: 70%;
+}
+
+.addCategoryButton {
+    width: 30%;
+}
+
+.deleteCategoryContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+.confirmDeleteButton {
+    margin-left: 10px;
+}
+.actionButtonsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.clearAllButton {
+    margin-left: auto;
+}
+
+.toggleDeleteButton {
+    margin-right: 8px;
+}

@@ -1,0 +1,52 @@
+# General
+node_modules/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_Store
+Thumbs.db
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.http
+
+# Backend
+/backend/node_modules/
+/backend/dist/
+/backend/.env
+/backend/*.log
+
+# Docker database files
+/data
+
+# Production
+/build
+/dist
+
+# Optional: Exclude specific files that might contain sensitive data or are specific to your IDE
+/.vscode/
+/.idea/
+*.swp
+*.swo
+
+# Optional: MacOS and Windows system files
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+/user-service/user-service/.env
+/backend/user-service/.env
+/frontend/.env
+/addon/chat/Chatio/obj
+/addon/chat/Chatio/Properties/PublishProfiles
+/addon/chat/Chatio/Properties/ServiceDependencies/Chatiox - Web Deploy
+/addon/chat/Chatio/.vs/Chatio
+/addon/chat/Chatio/bin
+/backend/collaboration-service/coverage

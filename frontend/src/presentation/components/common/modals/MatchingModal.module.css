@@ -1,0 +1,40 @@
+.matchingModal {
+    border-radius: 12px;
+}
+
+.modalContent {
+    text-align: center;
+    font-size: 16px;
+}
+
+.matchingSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.matchingText {
+    margin-top: 16px;
+    font-size: 18px;
+    color: #595959;
+}
+
+.elapsedTimeText {
+    margin-top: 12px;
+    font-size: 16px;
+    color: #8c8c8c;
+}
+
+.matchFoundSection {
+    text-align: center;
+}
+
+.matchFoundSection h2 {
+    font-size: 24px;
+    color: #1890ff;
+}
+
+.matchFoundSection p {
+    font-size: 16px;
+    color: #595959;
+}

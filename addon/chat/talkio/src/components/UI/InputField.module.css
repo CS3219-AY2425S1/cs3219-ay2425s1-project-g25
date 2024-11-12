@@ -1,0 +1,43 @@
+.messageInput {
+    flex: 1;
+    padding: 12px 10px;
+    border-radius: 15px;
+    border: 2px solid var(--input-border-unfocused);
+    outline: none;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+    color: var(--text-color);
+    background-color: var(--input-bg-color);
+    resize: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.messageInput:focus {
+    border-color: var(--accent-color-dark);
+    box-shadow: 0 0 10px rgba(var(--accent-color-rgb), 0.3);
+}
+
+.messageInput::placeholder {
+    color: var(--placeholder-color);
+}
+
+.messageInput:disabled {
+    background-color: var(--disabled-bg-color);
+    color: var(--disabled-text-color);
+    cursor: not-allowed;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.messageInput::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.messageInput {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

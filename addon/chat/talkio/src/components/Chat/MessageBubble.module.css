@@ -1,0 +1,62 @@
+.messageBubble {
+    margin-bottom: 16px;
+    padding: 14px 18px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    font-size: 16px;
+    line-height: 1.5;
+    animation: fadeInUp 0.5s ease both;
+    display: inline-block;
+    backdrop-filter: blur(5px);
+    font-family: 'Poppins', sans-serif;
+}
+
+.yourMessage {
+    align-self: flex-end;
+    background-color: var(--message-bg-color);
+    color: var(--text-color);
+    margin-left: auto;
+    margin-right: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.otherMessage {
+    align-self: flex-start;
+    background-color: var(--other-message-bg-color);
+    color: var(--text-color);
+    margin-left: 0;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sender's name (for other users) */
+.senderName {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+/* Message content */
+.messageContent {
+    font-size: 16px;
+}
+
+/* Timestamp of the message */
+.messageTimestamp {
+    font-size: 12px;
+    color: var(--timestamp-color);
+    margin-top: 8px;
+    text-align: right;
+}
+
+/* Fade-in animation for message bubbles */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,29 @@
+.content {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.status {
+    font-weight: 600;
+}
+
+.successStatus {
+    color: green;
+}
+
+.failStatus {
+    color: red;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.container {
+    border: 2px solid transparent;
+    transition: border-color 0.5s ease;
+    padding: 0 16px;
+    height: 100%;
+}

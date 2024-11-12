@@ -1,0 +1,51 @@
+/* Chat container styling */
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh);
+    background: linear-gradient(to bottom right,
+            var(--secondary-color),
+            var(--primary-color));
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Container for the messages */
+.messagesContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 20px 20px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input area container */
+.inputContainer {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: transparent;
+    border-top: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.messageInput {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: 2px solid var(--accent-color);
+    outline: none;
+    background-color: var(--input-bg-color);
+    font-size: 16px;
+    transition: border-color 0.3s, background-color 0.3s;
+    color: var(--text-color);
+}
+
+.messageInput:focus {
+    border-color: var(--accent-color-dark);
+    background-color: rgba(255, 255, 255, 0.9);
+}

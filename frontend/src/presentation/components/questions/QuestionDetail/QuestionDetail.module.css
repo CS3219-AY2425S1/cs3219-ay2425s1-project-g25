@@ -1,0 +1,207 @@
+.questionDetailWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.scrollableContent {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-bottom: 70px;
+    /* Space for the button */
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 24px;
+    padding: 16px 0;
+}
+
+.titleAndLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    max-width: 90%;
+}
+
+.titleAndLink h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.titleAndLink a {
+    display: flex;
+}
+
+.titleContainer img {
+    opacity: 30%;
+    cursor: pointer;
+}
+
+.titleContainer img:hover {
+    opacity: 100%;
+    transition: opacity 0.1s ease-in-out;
+}
+
+.contentContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 24px;
+    flex-grow: 1;
+}
+
+.divider {
+    margin: 0 0 24px 0;
+}
+
+.metaContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.difficultyContainer,
+.categoriesContainer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.metaLabel {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #555;
+    min-width: 80px;
+}
+
+.statusTag,
+.difficultyTag,
+.categoryTag {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    margin: 0 8px 8px 0;
+}
+
+.statusTag {
+    font-size: 1rem;
+    padding: 4px 12px;
+    font-weight: bold;
+}
+
+.bottomBarContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+}
+
+.bottomBarButton {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.working .card {
+    padding: 16px;
+}
+
+.working .header {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.working .title {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.working .statusTag {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+}
+
+.working .description {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.working .metaContainer {
+    gap: 8px;
+}
+
+.working .metaLabel {
+    font-size: 0.8rem;
+    min-width: 60px;
+}
+
+.working .difficultyTag,
+.working .categoryTag {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    margin: 0 4px 4px 0;
+}
+
+.working .divider {
+    margin: 0 0 16px 0;
+}
+
+.working .content {
+    text-align: left;
+}
+
+code {
+    font-family: monospace;
+    background-color: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #070707;
+}
+
+/* TEMPORARY CODE START */
+.createAttemptButton {
+    margin-top: 16px;
+    text-align: center;
+}
+ /* TEMPORARY CODE END */
+  

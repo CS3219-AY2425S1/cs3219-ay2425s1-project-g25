@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.header {
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.headerRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 2em;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.actionsButton {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.4em;
+    margin: 0;
+}

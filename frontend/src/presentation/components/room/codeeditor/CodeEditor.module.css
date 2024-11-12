@@ -1,0 +1,74 @@
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 8px;
+    overflow-y: hidden;
+}
+
+.toolbar {
+    padding: 4px;
+    height: 40px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toolbarLeft,
+.toolbarRight {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbarLeft,
+.editor {
+    flex: 1;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.pendingExecution {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pendingExecution p {
+    padding: 0;
+}
+
+.connectionStatusContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+}
+
+.connectionStatus {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.statusUsername {
+    line-height: 100%;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.greenCircle {
+    width: 10px;
+    height: 10px;
+    background-color: rgb(18, 221, 18);
+    border-radius: 50%;
+}

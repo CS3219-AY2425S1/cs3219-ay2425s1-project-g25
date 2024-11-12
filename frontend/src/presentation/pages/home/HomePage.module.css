@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.leftContainer,
+.rightContainer {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    position: relative;
+}
+
+.leftContainer {
+    position: relative;
+    align-items: center;
+    padding: 0 12px;
+    background-color: #f1f1f1;
+    row-gap: 5%;
+}
+
+.rightContainer {
+    width: 70%;
+    height: 100%;
+    position: relative;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    box-sizing: border-box;
+}
+
+.profileContainer {
+    position: absolute;
+}
+.recentAttempsContainer {
+    margin-top: 160px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.headline {
+    font-family: monospace;
+    font-size: 3.1em;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    margin-top: 20%;
+}
+
+.selectRow {
+    width: 80%;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+}

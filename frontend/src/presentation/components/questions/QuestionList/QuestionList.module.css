@@ -1,0 +1,23 @@
+.questionListContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.listContainer {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    margin-top: 8px;
+}
+
+.list {
+    padding: 16px;
+}
+
+.centerContent {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

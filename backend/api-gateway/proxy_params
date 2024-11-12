@@ -1,0 +1,17 @@
+# Proxy headers
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+
+# WebSocket headers
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection $connection_upgrade;
+
+# Timeouts
+proxy_connect_timeout 60s;
+proxy_read_timeout 3600s;  # Increased for long-lived WebSocket connections
+proxy_send_timeout 60s;
+
+# Buffering settings (optional, can be adjusted as needed)
+proxy_buffering off;

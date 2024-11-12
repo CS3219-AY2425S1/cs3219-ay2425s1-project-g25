@@ -1,0 +1,47 @@
+.toggleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+}
+
+.toggleButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.toggleButton:hover {
+    background-color: #f5f5f5;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.chatMode {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+}
+
+.questionMode {
+    background-color: #f3e8ff;
+    color: #7e22ce;
+}

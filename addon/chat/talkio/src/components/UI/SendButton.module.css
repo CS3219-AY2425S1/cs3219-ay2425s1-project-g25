@@ -1,0 +1,34 @@
+.sendButton {
+    margin-left: 12px;
+    padding: 12px;
+    background-color: var(--accent-color);
+    color: var(--text-light-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sendButton:hover {
+    background-color: var(--accent-color-dark);
+    transform: translateY(-2px);
+}
+
+.sendButton:active {
+    transform: translateY(0);
+}
+
+.sendIcon {
+    width: 24px;
+    height: 24px;
+    color: var(--text-light-color);
+    transition: color 0.3s;
+}
+
+.sendButton:hover .sendIcon {
+    color: var(--text-light-color);
+}

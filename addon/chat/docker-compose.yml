@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./talkio
+      dockerfile: Dockerfile
+    ports:
+      - "7000:3000"
+    volumes:
+      - ./talkio:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    command: npm run dev
+
+  api:
+    build:
+      context: ./Chatio
+      dockerfile: Dockerfile
+    ports:
+      - "7001:8080"
+    volumes:
+      - ./Chatio:/src
+      - /src/bin
+      - /src/obj
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - Redis__ConnectionString=redis:6379,password=your_redis_password,abortConnect=false
+    depends_on:
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "7002:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass your_redis_password --appendonly yes --port 6379
+
+volumes:
+  redis_data:

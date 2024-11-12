@@ -1,0 +1,63 @@
+:root {
+  --primary-color: rgba(255, 255, 255, 0.7);
+  --secondary-color: rgba(255, 255, 255, 0.9);
+  --text-color: #333;
+  --text-light-color: #fff;
+  --accent-color: #0066cc;
+  --accent-color-dark: #007aff;
+  --error-color: #f44336;
+  --success-color: #4caf50;
+  --border-color: rgba(255, 255, 255, 0.8);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --input-bg-color: rgba(255, 255, 255, 0.7);
+
+  --message-bg-color: rgba(173, 234, 210, 0.7);
+  --other-message-bg-color: rgba(230, 214, 242, 0.7);
+
+  --timestamp-color: #999;
+
+  --input-border-unfocused: rgba(0, 102, 204, 0.5);
+
+  /* New custom properties for link styles */
+  --link-color: #0066cc;
+  --link-hover-color: #004499;
+  --link-underline-color: rgba(0, 102, 204, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

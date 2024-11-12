@@ -1,0 +1,12 @@
+.endButton {
+    background-color: #ff4d4f !important;
+    color: #ffffff !important;
+}
+
+.modalContent {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 60vh;
+    overflow-y: auto;
+    font-family: monospace;
+}
